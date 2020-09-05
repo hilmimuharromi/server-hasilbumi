@@ -28,6 +28,7 @@ export default gql`
   extend type Query {
     productId(id: ID!): Product
     products: [Product!]
+    productsByCategory(kategori: String): [Product]
     kategori: [Kategori]
   }
   extend type Mutation {
@@ -43,7 +44,7 @@ export default gql`
       asal: String
       minimalOrder: String
       stok: Int
-      kategori: ID
+      kategori: String
     ): Product!
   }
 `;

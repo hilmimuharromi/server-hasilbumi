@@ -6,6 +6,22 @@ export default {
       const kategori = await kategoriModel.find();
       return kategori;
     },
+    products: async (parent, args, { models: { productModel } }, info) => {
+      const products = await productModel.find().populate("kategori").exec();
+      return products;
+    },
+    productsByCategory: async (
+      parent,
+      { kategori },
+      { models: { productModel } },
+      info
+    ) => {
+      const products = await productModel
+        .find({ kategori: kategori })
+        .populate("kategori")
+        .exec();
+      return products;
+    },
   },
   Mutation: {
     tambahKategori: async (
