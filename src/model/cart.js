@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const keranjangSchema = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
@@ -9,9 +9,9 @@ const keranjangSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "product",
   },
-  kuantitas: Number,
+  quantity: Number,
   total: Number,
 });
 
-const keranjang = mongoose.model("keranjang", keranjangSchema);
-export default keranjang;
+const cart = mongoose.model("cart", cartSchema);
+export default cart;

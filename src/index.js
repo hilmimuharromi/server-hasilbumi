@@ -11,7 +11,7 @@ import userModel from "./model/user";
 import productModel from "./model/product";
 import profileModel from "./model/profile";
 
-import kategoriModel from "./model/kategori";
+import categoryModel from "./model/category";
 const app = express();
 app.use(cors());
 
@@ -39,7 +39,7 @@ const server = new ApolloServer({
         models: {
           userModel,
           productModel,
-          kategoriModel,
+          categoryModel,
           profileModel,
         },
       };
@@ -53,6 +53,8 @@ app.listen(5000, () => {
   mongoose.connect("mongodb://localhost:27017/hasilbumi", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
   });
   console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
 });

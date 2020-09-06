@@ -1,34 +1,34 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  nama: {
+  name: {
     type: String,
     required: true,
   },
-  harga: {
+  price: {
     nominal: Number,
     ukuran: String,
   },
-  hargaDiskon: {
+  discountPrice: {
     nominal: Number,
     ukuran: String,
   },
-  gambar: {
+  imageUrl: {
     type: String,
   },
-  deskripsi: {
+  description: {
     type: String,
   },
-  asal: {
+  madeIn: {
     type: String,
   },
-  minimalOrder: {
+  minOrder: {
     type: String,
   },
-  stok: Number,
-  kategori: {
+  stock: Number,
+  category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "kategori",
+    ref: "category",
   },
 });
 

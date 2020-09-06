@@ -3,59 +3,35 @@ import { gql } from "apollo-server";
 export default gql`
   type Product {
     id: ID!
-    nama: String!
-    harga: Harga
-    hargaDiskon: Harga
-    gambar: String
-    deskripsi: String
-    asal: String
-    minimalOrder: Int
-    stok: Int
-    kategori: Kategori
+    name: String!
+    price: Price
+    discountPrice: Price
+    imageUrl: String
+    description: String
+    madeIn: String
+    minOrder: Int
+    stock: Int
   }
 
-  type Harga {
+  type Price {
     nominal: Int
     ukuran: String
   }
 
-  type Kategori {
-    id: ID
-    nama: String
-    gambar: String
-    kode: String
-  }
-
-  type Status {
+  type ResultAction {
     id: ID
     status: String
   }
 
   extend type Query {
-    productId(id: ID!): Product
-    products: [Product!]
-    kategori: [Kategori]
+    getProducts(
+      name: String
+      startPrice: Int
+      endPrice: Int
+      category: String
+    ): [Product]
   }
   extend type Mutation {
-    tambahKategori(
-      kode: Int
-      nama: String
-      slug: String
-      gambar: String
-    ): Kategori
-    hapusKategori(id: ID): Status
-    tambahProduk(
-      nama: String!
-      hargaNominal: Int
-      hargaUkuran: String
-      hargaDiskonNominal: Int
-      hargaDiskonUkuran: String
-      gambar: String
-      deskripsi: String
-      asal: String
-      minimalOrder: Int
-      stok: Int
-      kategori: ID
-    ): Product!
+    addProduct(name: String): Product!
   }
 `;

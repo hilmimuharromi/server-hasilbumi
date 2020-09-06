@@ -11,13 +11,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: Number,
+    required: true,
+  },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "profile",
-  },
-  keranjang: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "keranjang",
   },
 });
 

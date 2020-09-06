@@ -9,17 +9,13 @@ const profileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  nomorhp: {
+  handphone: {
     type: String,
   },
-  tanggalLahir: {
-    type: Date,
-    default: Date.now,
-  },
-  jenisKelamin: {
+  birthdate: {
     type: String,
   },
-  alamat: {
+  gender: {
     type: String,
   },
 });

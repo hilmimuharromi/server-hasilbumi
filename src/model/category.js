@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const kategoriSchema = new mongoose.Schema({
-  kode: {
+const categorySchema = new mongoose.Schema({
+  code: {
     type: Number,
     required: true,
     unique: true,
   },
-  nama: {
+  name: {
     type: String,
     required: true,
     unique: true,
@@ -16,8 +16,8 @@ const kategoriSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  gambar: String,
+  imageUrl: String,
 });
 
-const kategori = mongoose.model("kategori", kategoriSchema);
-export default kategori;
+const category = mongoose.model("category", categorySchema);
+export default category;
