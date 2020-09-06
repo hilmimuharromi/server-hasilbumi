@@ -25,6 +25,11 @@ export default gql`
     gambar: String
   }
 
+  type Status {
+    id: ID
+    status: String
+  }
+
   extend type Query {
     productId(id: ID!): Product
     products: [Product!]
@@ -32,6 +37,7 @@ export default gql`
   }
   extend type Mutation {
     tambahKategori(nama: String, gambar: String): Kategori
+    hapusKategori(id: ID): Status
     tambahProduk(
       nama: String!
       hargaNominal: Int

@@ -21,6 +21,24 @@ export default {
       console.log(kategori);
       return kategori;
     },
+    hapusKategori: async (
+      parent,
+      { id },
+      { models: { kategoriModel }, me },
+      info
+    ) => {
+      const kategori = await kategoriModel.deleteOne({ _id: id });
+      let status = {
+        id,
+        status: "Data Tidak Ditemukan",
+      };
+      if (kategori.n === 1) {
+        status.status = "Success";
+      }
+
+      console.log(status, "hapus kategori");
+      return status;
+    },
 
     tambahProduk: async (
       parent,
