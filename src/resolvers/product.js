@@ -26,17 +26,23 @@ export default {
   Mutation: {
     tambahKategori: async (
       parent,
-      { nama, gambar },
+      { _id, nama, gambar },
       { models: { kategoriModel }, me },
       info
     ) => {
       if (!me) {
         throw new AuthenticationError("You are not authenticated");
       }
-      const kategori = await kategoriModel.create({ nama, gambar });
+      const kategori = await kategoriModel.create({ _id, nama, gambar });
       console.log(kategori);
       return kategori;
     },
+
+    hapusKategori: async (parent,
+      { _id},{ models: { kategoriModel }, me },
+      info) => {
+        const kategori = await kategoriModel.de
+    }
 
     tambahProduk: async (
       parent,

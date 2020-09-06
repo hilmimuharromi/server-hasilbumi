@@ -32,7 +32,8 @@ export default gql`
     kategori: [Kategori]
   }
   extend type Mutation {
-    tambahKategori(nama: String, gambar: String): Kategori
+    tambahKategori(_id: String, nama: String, gambar: String): Kategori
+    hapusKategori(_id: String): Kategori
     tambahProduk(
       nama: String!
       hargaNominal: Int
