@@ -1,7 +1,17 @@
 import mongoose from "mongoose";
 
 const kategoriSchema = new mongoose.Schema({
+  kode: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
   nama: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  slug: {
     type: String,
     required: true,
     unique: true,

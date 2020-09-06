@@ -1,4 +1,4 @@
-import { AuthenticationError } from "apollo-server";
+import { AuthenticationError, UserInputError } from "apollo-server";
 
 export default {
   Query: {
@@ -6,18 +6,25 @@ export default {
       const kategori = await kategoriModel.find();
       return kategori;
     },
+    products: async (parent, args, { models: { productModel } }, info) => {
+      const products = await productModel
+        .find()
+        .populate({ path: "kategori", match: { kode: 3 } })
+        .exec();
+      return products;
+    },
   },
   Mutation: {
     tambahKategori: async (
       parent,
-      { nama, gambar },
+      { kode, nama, slug, gambar },
       { models: { kategoriModel }, me },
       info
     ) => {
       if (!me) {
         throw new AuthenticationError("You are not authenticated");
       }
-      const kategori = await kategoriModel.create({ nama, gambar });
+      const kategori = await kategoriModel.create({ kode, nama, slug, gambar });
       console.log(kategori);
       return kategori;
     },
@@ -27,6 +34,8 @@ export default {
       { models: { kategoriModel }, me },
       info
     ) => {
+      if (!me) throw new AuthenticationError("You are not authenticated");
+
       const kategori = await kategoriModel.deleteOne({ _id: id });
       let status = {
         id,
@@ -34,6 +43,8 @@ export default {
       };
       if (kategori.n === 1) {
         status.status = "Success";
+      } else {
+        throw new UserInputError("Data Tidak Ditemukan");
       }
 
       console.log(status, "hapus kategori");
@@ -42,14 +53,7 @@ export default {
 
     tambahProduk: async (
       parent,
-      args,
-      { models: { productModel }, me },
-      info
-    ) => {
-      if (!me) {
-        throw new AuthenticationError("You are not authenticated");
-      }
-      const {
+      {
         nama,
         hargaNominal,
         hargaUkuran,
@@ -61,7 +65,13 @@ export default {
         minimalOrder,
         stok,
         kategori,
-      } = args;
+      },
+      { models: { productModel }, me },
+      info
+    ) => {
+      if (!me) {
+        throw new AuthenticationError("You are not authenticated");
+      }
 
       const product = await productModel.create({
         nama,

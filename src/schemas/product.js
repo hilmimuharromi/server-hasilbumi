@@ -9,7 +9,7 @@ export default gql`
     gambar: String
     deskripsi: String
     asal: String
-    minimalOrder: String
+    minimalOrder: Int
     stok: Int
     kategori: Kategori
   }
@@ -23,6 +23,7 @@ export default gql`
     id: ID
     nama: String
     gambar: String
+    kode: String
   }
 
   type Status {
@@ -36,7 +37,12 @@ export default gql`
     kategori: [Kategori]
   }
   extend type Mutation {
-    tambahKategori(nama: String, gambar: String): Kategori
+    tambahKategori(
+      kode: Int
+      nama: String
+      slug: String
+      gambar: String
+    ): Kategori
     hapusKategori(id: ID): Status
     tambahProduk(
       nama: String!
@@ -47,7 +53,7 @@ export default gql`
       gambar: String
       deskripsi: String
       asal: String
-      minimalOrder: String
+      minimalOrder: Int
       stok: Int
       kategori: ID
     ): Product!
