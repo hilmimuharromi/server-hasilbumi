@@ -33,5 +33,6 @@ export default gql`
   }
   extend type Mutation {
     addProduct(name: String): Product!
+    seedProducts(password: String): [Product]
   }
 `;

@@ -1,7 +1,23 @@
 import { AuthenticationError, UserInputError } from "apollo-server";
-
+import dataProducts from "../dataProducts";
 export default {
   Query: {
+    getProducts: async (
+      parent,
+      { name, startPrice, endPrice, category },
+      { models: { productModel } },
+      info
+    ) => {
+      if (!name) name = "";
+      const products = await productModel
+        .find({
+          name: { $regex: name, $options: "i" },
+          "price.nominal": { $lt: 39000 },
+        })
+        .exec();
+      console.log(products, "get products");
+      return products;
+    },
     // products: async (parent, args, { models: { productModel } }, info) => {
     //   const products = await productModel.find().exec();
     //   return products;
@@ -21,6 +37,20 @@ export default {
     // },
   },
   Mutation: {
+    seedProducts: async (
+      parent,
+      { password },
+      { models: { productModel } },
+      info
+    ) => {
+      if (password === "168168") {
+        const result = await productModel.insertMany(dataProducts);
+        console.log(result, "insertmany");
+        return result;
+      } else {
+        throw new AuthenticationError("Tidak Punya Akses");
+      }
+    },
     // addProduct: async (
     //   parent,
     //   {

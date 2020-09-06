@@ -26,10 +26,7 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
   stock: Number,
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "category",
-  },
+  codeCategory: Number,
 });
 
 const product = mongoose.model("product", productSchema);
