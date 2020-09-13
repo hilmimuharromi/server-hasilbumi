@@ -11,6 +11,7 @@ export default gql`
     madeIn: String
     minOrder: Int
     stock: Int
+    codeCategory: String
   }
 
   type Price {
@@ -23,13 +24,25 @@ export default gql`
     status: String
   }
 
+  type PageInfo {
+    total: Int
+    page: Int
+  }
+
+  type Result {
+    pageInfo: PageInfo
+    products: [Product]
+  }
+
   extend type Query {
     getProducts(
       name: String
       startPrice: Int
       endPrice: Int
       category: String
-    ): [Product]
+      limit: Int
+      page: Int
+    ): Result
   }
   extend type Mutation {
     addProduct(name: String): Product!

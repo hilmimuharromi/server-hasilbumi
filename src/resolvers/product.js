@@ -1,23 +1,46 @@
 import { AuthenticationError, UserInputError } from "apollo-server";
+import e from "cors";
 import dataProducts from "../dataProducts";
+import category from "./../model/category";
 export default {
   Query: {
     getProducts: async (
       parent,
-      { name, startPrice, endPrice, category },
+      { name, startPrice, endPrice, category, page, limit },
       { models: { productModel } },
       info
     ) => {
       if (!name) name = "";
+      if (!page) page = 1;
+      if (!startPrice) startPrice = 0;
+      if (!endPrice) endPrice = 99999999999;
+      console.log(category, "kategori");
       const products = await productModel
         .find({
           name: { $regex: name, $options: "i" },
-          "price.nominal": { $lt: 39000 },
+
+          "price.nominal": { $gte: startPrice, $lte: endPrice },
         })
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
         .exec();
-      console.log(products, "get products");
-      return products;
+      const count = await productModel.countDocuments({
+        name: { $regex: name, $options: "i" },
+
+        "price.nominal": { $gte: startPrice, $lte: endPrice },
+      });
+
+      let payload = {
+        pageInfo: {
+          total: count,
+          page: page,
+        },
+        products: products,
+      };
+      console.log(payload, "total get products");
+      return payload;
     },
+
     // products: async (parent, args, { models: { productModel } }, info) => {
     //   const products = await productModel.find().exec();
     //   return products;
